@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid"; */
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { Card, CardContent } from "@mui/material";
+import { Alert, Card, CardContent, Snackbar } from "@mui/material";
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -15,6 +15,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import Home from "../Home";
+import { MesssageEnum } from "../../enums/messageEnum";
 
 export default function Login() {
     const [value, setValue] = React.useState('1');
@@ -24,6 +25,19 @@ export default function Login() {
         setValue(newValue);
     };
 
+    /* Snack */
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const [severity, setSeverity] = React.useState(MesssageEnum.SUCCESS);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     /* Functions */
     const handleSubmitLogin = (event) => {
         event.preventDefault();
@@ -31,9 +45,13 @@ export default function Login() {
         const email = data.get("emailLogin")
         const pass = data.get("passwordLogin")
 
-        if(email === 'admin' && pass === 'admin'){
+        if (email === 'admin' && pass === 'admin') {
             console.log(1)
             navigate("/home")
+        }else{
+            setOpen(true)
+            setSeverity(MesssageEnum.ERROR)
+            setMessage('Credenciais Invalidas!')
         }
     };
 
@@ -42,6 +60,10 @@ export default function Login() {
         const data = new FormData(event.currentTarget);
         const email = data.get("emailSignUp")
         const pass = data.get("passwordSignUp")
+
+        setOpen(true)
+        setSeverity(MesssageEnum.SUCCESS)
+        setMessage('Usuário Cadastrado com Sucesso!')
     };
 
     /* Return */
@@ -53,7 +75,7 @@ export default function Login() {
             justifyContent: "center",
             minHeight: "100vh"
         }}>
-            <Typography component="h1" variant="h5" sx={{marginBottom: 3}}>
+            <Typography component="h1" variant="h5" sx={{ marginBottom: 3 }}>
                 Store Online
             </Typography>
             <Card variant="outlined">
@@ -66,7 +88,7 @@ export default function Login() {
                                 <Tab label="Cadastro" value="2" />
                             </TabList>
                         </Box>
-                        
+
                         {/* Tab Login */}
                         <TabPanel value="1">
 
@@ -108,7 +130,7 @@ export default function Login() {
                         </TabPanel>
                         {/* Tab Cadastro */}
                         <TabPanel value="2">
-                        <Box component="form" onSubmit={handleSubmitSignUp} noValidate sx={{ mt: 1 }}>
+                            <Box component="form" onSubmit={handleSubmitSignUp} noValidate sx={{ mt: 1 }}>
                                 <TextField
                                     margin="normal"
                                     required
@@ -143,7 +165,17 @@ export default function Login() {
                 </CardContent>
 
             </Card>
-
+            {/* Message */}
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert
+                    onClose={handleClose}
+                    severity={severity}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {message}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 }
