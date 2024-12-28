@@ -47,7 +47,7 @@ export default function Login() {
 
         if (email === 'admin' && pass === 'admin') {
             console.log(1)
-            navigate("/order")
+            navigate("/home")
         }else{
             setOpen(true)
             setSeverity(MesssageEnum.ERROR)

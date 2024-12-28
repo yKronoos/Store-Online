@@ -25,7 +25,7 @@ export default function Order() {
     return (
         <Box >
             <Box sx={{textAlign: "center", padding: 1}}>
-                <Button variant="contained" color="success" endIcon={<AddIcon />} onClick={handleOpen}>Adicionar Pedido</Button>
+                <Button variant="contained" color="success" endIcon={<AddIcon />} onClick={handleOpen}>Fazer novo Pedido</Button>
             </Box>
             
             {/* Table */}

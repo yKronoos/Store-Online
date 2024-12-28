@@ -12,46 +12,32 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
 
 const columns = [
-    { id: 'nameProduct', label: 'Produto', minWidth: "30%", align: 'center', },
-    { id: 'quantity', label: 'Quantidade', align: 'center', },
-    {
-        id: 'orderDate',
-        label: 'Data do Pedido',
-        align: 'center',
-    },
-    {
-        id: 'totalPrice',
-        label: 'Total da Compra',
-        align: 'center',
-    },
-    {
-        id: 'status',
-        label: 'Status do Pedido',
-        align: 'center',
-        minWidth: "20%",
-    },
+    { id: 'id', label: 'Id', align: 'center', },
+    { id: 'nameProduct', label: 'Nome do Produto', minWidth: "40%", align: 'center', },
+    { id: 'price', label: 'Preço', align: 'center', },
 ];
 
-function createData(nameProduct, quantity, orderDate, totalPrice, status) {
-    return { nameProduct, quantity, orderDate, totalPrice, status };
+function createData(id, nameProduct, price) {
+    return { id, nameProduct, price};
 }
 
 const rows = [
-    createData('Produto 1', 1, new Date().toDateString(), 29, 'Entregue'),
-    createData('Produto 2', 1, new Date().toDateString(), 29, 'Em Rota'),
-    createData('Produto 3', 12, new Date().toDateString(), 29, 'Entregue'),
-    createData('Produto 4', 14, new Date().toDateString(), 29, 'Em Rota'),
-    createData('Produto 5', 16, new Date().toDateString(), 29, 'Entregue'),
-    createData('Produto 6', 178, new Date().toDateString(), 29, 'Em Rota'),
-    createData('Produto 7', 13, new Date().toDateString(), 29, 'Entregue'),
-    createData('Produto 8', 1, new Date().toDateString(), 29, 'Em Rota'),
-    createData('Produto 9', 1, new Date().toDateString(), 29, 'Em Rota'),
-    createData('Produto 10', 1, new Date().toDateString(), 29, 'Em Rota'),
-    createData('Produto 11', 1, new Date().toDateString(), 29, 'Entregue'),
-    createData('Produto 12', 1, new Date().toDateString(), 29, 'Em Rota'),
+    createData( 1, 'Produto 1', 'R$ '+ 1.1),
+    createData( 2, 'Produto 2', 'R$ '+1.2),
+    createData( 3, 'Produto 3', 'R$ '+1.3),
+    createData( 4, 'Produto 4', 'R$ '+1.4),
+    createData( 5, 'Produto 5', 'R$ '+1.5),
+    createData( 6, 'Produto 6', 'R$ '+1.6),
+    createData( 7, 'Produto 7', 'R$ '+1.7),
+    createData( 8, 'Produto 8', 'R$ '+1.8),
+    createData( 9, 'Produto 9', 'R$ '+1.9),
+    createData( 10, 'Produto 10', 'R$ '+12.1),
+    createData( 11, 'Produto 11', 'R$ '+13.1),
+    createData( 12, 'Produto 12', 'R$ '+14.1),
+    createData( 13, 'Produto 13', 'R$ '+17.1),
 ];
 
-export default function ListOrder() {
+export default function ListProduct() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
