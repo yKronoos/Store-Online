@@ -1,54 +1,63 @@
-import { AppBar, Box, Button, Modal, SvgIcon, Toolbar, Typography } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
 import * as React from 'react';
-import './style.css'
-import RequestForm from "../../forms/request-form";
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+
+const drawerWidth = 240;
 
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '55vw',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+export default function Header({chooseView}) {
 
-export default function Header() {
-    /* Modal */
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+    const handleListItemClick = (event, index) => {
+        setSelectedIndex(index);
+        chooseView(index)
+    };
 
     return (
-        <AppBar position="static">
-            <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Store Online
-                </Typography>
-                
-                
-                <Button variant="contained" color="success" endIcon={<AddIcon />} onClick={handleOpen}>Adicionar Pedido</Button>
-            </Toolbar>
-
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+        <Box>
+            <Drawer
+                variant="permanent"
+                sx={{
+                    width: drawerWidth,
+                    flexShrink: 0,
+                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                }}
             >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Realize seu pedido
+                <Toolbar>
+                    <Typography variant="h6">
+                        Store Online
                     </Typography>
-                    <Box>
-                        <RequestForm />
-                    </Box>
+
+                </Toolbar>
+                <Box sx={{ overflow: 'auto' }}>
+                    <List>
+                        {['Pedidos', 'Produtos'].map((text, index) => (
+                            <ListItem key={text} disablePadding>
+                                <ListItemButton
+                                    selected={selectedIndex === index}
+                                    onClick={(event) => handleListItemClick(event, index)}>
+                                    <ListItemIcon>
+                                        {index % 2 === 0 ? <LocalGroceryStoreIcon /> : <LocalOfferIcon />}
+                                    </ListItemIcon>
+                                    <ListItemText primary={text} />
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
                 </Box>
-            </Modal>
-        </AppBar>
+            </Drawer>
+        </Box>
+
+
     )
 }
